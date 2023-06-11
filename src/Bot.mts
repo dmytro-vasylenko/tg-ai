@@ -7,8 +7,6 @@ import { AIChatProvider } from './ChatProvider/AIChatProvider.mjs';
 import { AIDecisionMaker } from './DecisionMaker/AIDecisionMaker.mjs';
 import { ImageGenerator } from './ImageGenerator.mjs';
 
-import { TELEGRAM_BOT_USERNAME } from './constants.mjs';
-
 type ReplyData = {
   chatId: number,
   username: string,
@@ -33,7 +31,7 @@ export class Bot {
   };
 
   handleChat() {
-    this.bot.onText(new RegExp(`\@${TELEGRAM_BOT_USERNAME}`, 'g'), this.handleTagging.bind(this));
+    this.bot.onText(new RegExp(`\@${process.env.TELEGRAM_BOT_USERNAME}`, 'g'), this.handleTagging.bind(this));
     this.bot.on('message', this.handleMessage.bind(this));
   }
 
@@ -50,7 +48,7 @@ export class Bot {
       } = {},
     } = messageEvent;
 
-    if (replyUsername !== TELEGRAM_BOT_USERNAME) {
+    if (replyUsername !== process.env.TELEGRAM_BOT_USERNAME) {
       return;
     }
 
@@ -101,7 +99,7 @@ export class Bot {
       });
 
       this.chatProvider.appendMessage(botMessageId, {
-        username: TELEGRAM_BOT_USERNAME,
+        username: process.env.TELEGRAM_BOT_USERNAME!,
         content: botMessageText,
         replyTo: messageId,
       });

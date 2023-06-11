@@ -2,7 +2,6 @@ import { ChatCompletionRequestMessage } from 'openai';
 
 import { ChatGPT } from '../ChatGPT/ChatGPT.mjs';
 import { MessageHistory } from '../ChatGPT/MessageHistory.mjs';
-import { TELEGRAM_BOT_USERNAME } from '../constants.mjs';
 
 import { ChatProvider, Message } from './types.mjs';
 
@@ -12,7 +11,7 @@ export class AIChatProvider implements ChatProvider {
       role: 'system',
       content: [
         'Поводь себе як звичайний участник чату, придумай собі імʼя, але не поводь себе як бот чи як компʼютерна программа, бо ти є людина',
-        `Твій юзернейм "@${TELEGRAM_BOT_USERNAME}"`,
+        `Твій юзернейм "@${process.env.TELEGRAM_BOT_USERNAME}"`,
         'Будь доброзичливим, використовуй емодзі коли це можливо',
         'Ти не повинен використовувати російську мову',
         'Відповідай стисло, але зрозуміло',
@@ -48,7 +47,7 @@ export class AIChatProvider implements ChatProvider {
   getPreviousMessages(replyTo?: number) {
     return this.messageHistory.getMessagesChain(replyTo).map(({ content, username }): ChatCompletionRequestMessage => {
       return {
-        role: TELEGRAM_BOT_USERNAME === username ? 'assistant' : 'user',
+        role: process.env.TELEGRAM_BOT_USERNAME === username ? 'assistant' : 'user',
         content,
         name: username,
       };
