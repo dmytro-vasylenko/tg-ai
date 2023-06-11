@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "target": "esnext",
+    "module": "NodeNext",
+    "sourceMap": true,
+    "strict": true,
+    "outDir": "dist",
+    "noErrorTruncation": true,
+    "baseUrl": "./dist",
+    "paths": {
+      "Shared/*": ["shared/*"],
+    },
+  },
+  "lib": ["es2015"],
+  "exclude": ["node_modules"],
+}
